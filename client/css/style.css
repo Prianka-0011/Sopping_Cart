@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.navbar-brand img {
+    height: 2rem;
+    
+}
+thead tr{
+    background-color:  #ff0077;
+    color: #f5f4f4;
+}
+.form-control{
+    
+    width: 13rem;
+    border-radius: 3rem;
+}
+.navbar-custom {
+    background-color: #ff0077; /* Replace with your desired color */
+  }
+  .button-login:hover{
+    box-shadow: 0 0 1rem #41383c;
+    color: bisque;
+    
+  }
+  .cart-btn{
+    color: #ff0077 ;
+    cursor: pointer;
+  }
+  .cart-btn:hover{
+    outline: none;
+  }
+ .button-login{
+    color: bisque;
+    
+    width: 5rem;
+    border-radius: 3rem;
+    background-color: #41383c;
+}
+.button-logout{
+    color: bisque;
+    
+    width: 7rem;
+    border-radius: 3rem;
+    background-color: #41383c;
+}
+.button-logout:hover{
+    box-shadow: 0 0 1rem #41383c;
+    color: bisque;
+}
+#products-head {
+text-align: center;
+padding: 3rem 0;
+}
+#product-list {
+    border: solid .1rem #f5f4f4;
+    border-radius: .3rem;
+    padding: 2rem;
+    margin-top: 10%;
+    
+}
+#product-list:hover{
+    box-shadow: 0 0 1rem #41383c;
+  
+}
+#cart-item-list{
+    border: solid .1rem #f5f4f4;
+    border-radius: .3rem;
+    padding: 2rem;
+    margin-top: 2%; 
+}
+#cart-item-list:hover{
+    box-shadow: 0 0 1rem #41383c;
+  
+}
+.center-div{
+    text-align: center;
+}
