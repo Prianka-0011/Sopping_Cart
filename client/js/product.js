@@ -47,7 +47,7 @@ let productList=[];
                         "<td>" + productList[i].name + "</td>" +
                         "<td>" + productList[i].price + "</td>" +
                        // <img src='" + prodList[i].Image + "' alt='Product Image'></img>
-                        "<td><img src='../images/"+productList[i].image+"' style='height: 3rem;width:3rem; border-radius: 1.5rem;' alt='Product Image'></td>" +
+                        "<td><img src='./images/1.jpeg' style='height: 1rem;' alt='Product Image'></td>" +
                         "<td>" + productList[i].stock + "</td>" +
                         "<td>" +
                         "<button class='btn cart-btn' onclick='addToCart(" + productList[i].id + ")'><i class='bx bx-cart'></i></button>" +

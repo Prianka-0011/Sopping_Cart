@@ -1,64 +1,104 @@
-const express=require('express');
-const app=express();
-//const cors = require('cors');
-const path=require('path');
-const port=3000;
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
+const path = require('path');
+const port = 3000;
 const productRouter = require('./routes/productRouter');
+app.use(express.static(path.join(__dirname, '../client')));
+const swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'Shopping Cart',
+    version: '1.0.0',
+    description: 'Shopping Cart API Description',
+  },
+  servers: [
+    {
+      url: 'http://localhost:3000',
+      description: 'Development server',
+    },
+  ],
+};
 
-//app.use(cors());
+const options = {
+  swaggerDefinition,
+  apis: ['./routes/*.js', './app.js'], // Add the path to your login route file
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
 app.use(express.json());
-//console.log(path.join(__dirname,'../client'));
-//midleware
-//app.use(express.static(path))
+app.use(cors());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-const staticPath=(path.join(__dirname,'../client'));
-app.use(express.static(staticPath));
+app.get('/', (req, res) => {
+  res.send('It\'s working');
+});
 
-app.get('/',(req,res)=>{
-    res.send("Its working");
-})
-
-//login part
 let db = [
-    { id: 1, username: 'John', password: '111' },
-    { id: 2, username: 'Edward', password: '222' }
-  ];
+  { id: 1, username: 'Prianka', password: '111' },
+  { id: 2, username: 'Edward', password: '222' }
+];
 
-  app.post('/login', (req, res, next) => {
-
-    
-  const user = db.find(user => user.username === req.body.username && user.password === req.body.password);
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: API endpoints for user authentication
+ * /login:
+ *   post:
+ *     summary: User login
+ *     description: Logs in a user with the provided credentials and returns an access token and user information.
+ *     tags: [Authentication] 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successful login
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *                 userInfo:
+ *                   type: string
+ *       401:
+ *         description: Invalid credentials
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  const user = db.find(user => user.username === username && user.password === password);
   if (user) {
-
-
     const accessToken = `${user.id}-${user.username}-${Date.now().toString()}`;
     const userInfo = user.username;
     res.json({ accessToken, userInfo });
-    console.log(res.json());
-    //res.json({ accessToken: `${user.id}-${user.username}-${Date.now().toString()}`,userInfo: `${user.username}`})
   } else {
-    res.json({ error: 'Invalid username and password!' });
-    // throw new Error('dfdfdf');
+    res.status(401).json({ error: 'Invalid username and password!' });
   }
 });
-// app.use((req, res, next) => {
-//   const auth = req.headers.authorization;
-//   // console.log();
-//   console.log("I am in now server Authencation");
-//   const token = auth.split(' ')[1]
-//   if (token === 'null') {
-//     res.json({ error: 'No Access Token' });
-//   } else {
-//     req.user = token.split('-')[0];
-//     next();
-//   }
-// })
-
-//product 
 
 app.use('/products', productRouter);
 
-
-app.listen(port,()=>{
-    console.log(`Listen to the port${port}`);
-})
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
